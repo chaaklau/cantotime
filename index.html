@@ -1,26 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang='yue-Hant-HK'>
 <head>
 <title>Cantonese Time 廣東話時間</title>
 <script src='clock.js' type='text/javascript'></script>
 <script type='text/javascript'>
-function convert(){
-  //var value = document.getElementById("input").value;
-  //var hzr = eval(value);
-  var hzr = getTime();
-  document.getElementById('clock').innerHTML= new Date().toLocaleTimeString('en-uk', { hour: 'numeric', hour12: true, minute: 'numeric' }); 
+function updateText(hzr){
+  document.getElementById('clock').innerHTML= new Date().toLocaleTimeString('en-uk', { hour: 'numeric', hour12: true, minute: 'numeric', second: 'numeric' }); 
   document.getElementById('canto').innerHTML=hzr2canto(hzr);
-  setTimeout(function(){ convert(); }, 2000);
+}
+
+function extractCantoString(hzr) {
+  var cantoString = hzr2canto(hzr);
+  var regex = /[a-z]{1,6}[1-6]/g
+  var jp = '';
+  var match = regex.exec(cantoString);
+  while (match != null) {
+    jp += match[0] + ' ';
+    match = regex.exec(cantoString);
+  }
+  return jp;
+}
+
+function playSound(hzr){
+  console.log(extractCantoString(hzr));
+}
+
+function updateTime(){
+
+  var hzr = getTime();
+  if (typeof g_time === 'undefined') { 
+    g_time = hzr.toString();
+    playSound(hzr);
+  }
+  if (g_time.split(",")[2] != hzr[2]){
+    playSound(hzr);
+  }
+  if (g_time !== hzr.toString()) {
+    g_time = hzr.toString();
+    updateText(hzr);
+  }
+  setTimeout(function(){ updateTime(); }, 1000);
 }
 </script>
 <style>
 body {background-color:#000022; text-align:center; font-family:serif; } 
-h1 {color:white; font-size:5em; font-family:sans-serif; } 
-h2 {color:yellow; font-size:8em;} 
-p {color:lightgray; font-size:1.5em; }
+h1 {color:white; font-size:4em; font-family:sans-serif; } 
+h2 {color:yellow; font-size:6em;} 
+p {color:lightgray; font-size:1.3em; }
+em {font-weight: bold; font-style: normal; text-decoration: underline; }
+rt {font-size:0.3em; color:#FFFFDD;}
 </style>
 </head>
-<body onload='convert()'>
+<body onload='updateTime()'>
 <!--textarea id='input'></textarea-->
 <!--button type='button' onclick='convert();'>Check</button-->
 <h2 id='clock'></h2>

@@ -2,8 +2,8 @@ const cardinal_char = ['十二(sap6-ji6)','一(jat1)','兩(loeng5)','三(saam1)'
 const ordinal_char = ['正(zing3)','一(jat1)','二(ji6)','三(saam1)','四(sei3)','五(ng5)','半(bun3)','七(cat1)','八(baat3)','九(gau2)','十(sap6)','十一(sap6-jat1)',''];
 const h_word = '點(dim2)'; //added after the hour
 const w_pref_word = '沓(daap6)'; //optionally added before the word (zi6)
-const w_suff_word = '個字(go3-zi6)'; //
-const half_word = '個半字(go3-bun3-zi6)';
+const w_suff_word = '個字(go3 zi6)'; //
+const half_word = '個半字(go3 bun3 zi6)';
 const over_word = '過啲(gwo3-di1)'; //added if minute remainder is 1,2
 const exact_word = '正(zing3)'; //added for exact o'clock
 const almost_word = '就嚟(zau6-lai4)'; //added to the front if minute remainder is 4
@@ -15,22 +15,24 @@ function getTime() {
   var d = new Date();
   var h = d.getHours();
   var m = d.getMinutes();
-  return [h, Math.floor(m / 5), m % 5];
+  var s = d.getSeconds();
+  return [h, Math.floor(m / 5), m % 5, s];
 }
 
 String.prototype.makeruby = function() {
-  return '<ruby>' + this.replace('(','<rt>').replace(')','</rt>') + '</ruby>&nbsp;&nbsp;';
+  return '<ruby>' + this.replace('(','<rt>').replace(')','</rt>') + '</ruby>';
 }
 
 function hzr2canto(hzr) {
   var h = hzr[0] - (hzr[0]> 11 ? 12 : 0) ;
   var z = hzr[1];
   var r = hzr[2];
+  var s = hzr[3];
 
   var exact = r==0;
-  var over = r==1 || r==2 || (z==0 && r==3);
-  var half = r==3 && z!=0;
-  var almost = r==4;
+  var over = r==1 || (z==0 && (r==2 || r==3 && s < 30));
+  var half = z!=0 && ( r==2 || r==3 && s < 30 );
+  var almost = r==4 || (r==3 && s >= 30);
   
   //If it is one minute to the next clear-cut unit, say 'almost', and then round up
   if (almost) {
