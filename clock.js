@@ -1,14 +1,14 @@
-const cardinal_char = ['十二(sap6-ji6)','一(jat1)','兩(loeng5)','三(saam1)','四(sei3)','五(ng5)','六(luk6)','七(cat1)','八(baat3)','九(gau2)','十(sap6)','十一(sap6-jat1)','十二(sap6-ji6)' ];
-const ordinal_char = ['正(zing3)','一(jat1)','二(ji6)','三(saam1)','四(sei3)','五(ng5)','半(bun3)','七(cat1)','八(baat3)','九(gau2)','十(sap6)','十一(sap6-jat1)',''];
-const h_word = '點(dim2)'; //added after the hour
-const w_pref_word = '沓(daap6)'; //optionally added before the word (zi6)
-const w_suff_word = '個字(go3 zi6)'; //
-const half_word = '個半字(go3 bun3 zi6)';
-const over_word = '過啲(gwo3-di1)'; //added if minute remainder is 1,2
-const exact_word = '正(zing3)'; //added for exact o'clock
-const almost_word = '就嚟(zau6-lai4)'; //added to the front if minute remainder is 4
-const is_word = '係(hai6)'; //added to all other minute remainder other than 4
-const now_word = '而家(ji4-gaa1)'; 
+const cardinal_char = ['{twelve}十二(sap6-ji6)','{one}一(jat1)','{two}兩(loeng5)','{three}三(saam1)','{four}四(sei3)','{five}五(ng5)','{six}六(luk6)','{seven}七(cat1)','{eight}八(baat3)','{nine}九(gau2)','{ten}十(sap6)','{eleven}十一(sap6-jat1)','{twelve}十二(sap6-ji6)' ];
+const ordinal_char = ['{on the hour}正(zing3)','{one}一(jat1)','{two}二(ji6)','{three}三(saam1)','{four}四(sei3)','{five}五(ng5)','{half}半(bun3)','{seven}七(cat1)','{eight}八(baat3)','{nine}九(gau2)','{ten}十(sap6)','{eleven}十一(sap6-jat1)',''];
+const h_word = '{hour}點(dim2)'; //added after the hour
+const w_pref_word = '{step}沓(daap6)'; //optionally added before the word (zi6)
+const w_suff_word = '{word}個字(go3 zi6)'; //
+const half_word = '{halfway past}個半字(go3 bun3 zi6)';
+const over_word = '{a little past}過啲(gwo3-di1)'; //added if minute remainder is 1,2
+const exact_word = '{on the hour}正(zing3)'; //added for exact o'clock
+const almost_word = '{almost}就嚟(zau6-lai4)'; //added to the front if minute remainder is 4
+const is_word = '{is}係(hai6)'; //added to all other minute remainder other than 4
+const now_word = '{now}而家(ji4-gaa1)';
 function getTime() {
   //getTime() returns the time in the [h:z:r] format
   //Cantonese clock is divded into
@@ -20,7 +20,7 @@ function getTime() {
 }
 
 String.prototype.makeruby = function() {
-  return '<ruby>' + this.replace('(','<rt>').replace(')','</rt>') + '</ruby>';
+  return '<ruby>' + this.replace('{', '<span title="').replace('}', '">').replace('(','</span><rt>').replace(')','</rt>') + '</ruby>';
 }
 
 function hzr2canto(hzr) {
