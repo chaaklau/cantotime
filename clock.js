@@ -1,5 +1,5 @@
 const cardinal_char = ['十二(sap6-ji6)','一(jat1)','兩(loeng5)','三(saam1)','四(sei3)','五(ng5)','六(luk6)','七(cat1)','八(baat3)','九(gau2)','十(sap6)','十一(sap6-jat1)','十二(sap6-ji6)' ];
-const ordinal_char = ['正(zing3)','一(jat1)','二(ji6)','三(saam1)','四(sei3)','五(ng5)','半(bun3)','七(cat1)','八(baat3)','九(gau2)','十(sap6-ji6)','十一(sap6-jat1)',''];
+const ordinal_char = ['正(zing3)','一(jat1)','二(ji6)','三(saam1)','四(sei3)','五(ng5)','半(bun3)','七(cat1)','八(baat3)','九(gau2)','十(sap6)','十一(sap6-jat1)',''];
 const h_word = '點(dim2)'; //added after the hour
 const w_pref_word = '沓(daap6)'; //optionally added before the word (zi6)
 const w_suff_word = '個字(go3-zi6)'; //
