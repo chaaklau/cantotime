@@ -10,6 +10,7 @@ function convert(){
   var hzr = getTime();
   document.getElementById('clock').innerHTML= new Date().toLocaleTimeString('en-uk', { hour: 'numeric', hour12: true, minute: 'numeric' }); 
   document.getElementById('canto').innerHTML=hzr2canto(hzr);
+  setTimeout(function(){ convert(); }, 2000);
 }
 </script>
 <style>
