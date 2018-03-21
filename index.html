@@ -20,18 +20,6 @@ function updateText(hzr){
   }
 }
 
-function extractCantoString(hzr) {
-  var cantoString = hzr2canto(hzr);
-  var regex = /[a-z]{1,6}[1-6]/g
-  var jp = '';
-  var match = regex.exec(cantoString);
-  while (match != null) {
-    jp += match[0] + ' ';
-    match = regex.exec(cantoString);
-  }
-  return jp;
-}
-
 function updateTime(){
 
   var hzr = getTime();
@@ -44,6 +32,16 @@ function updateTime(){
   }
   setTimeout(function(){ updateTime(); }, 1000);
 }
+
+//This is to workaround the iphone safari restriction that blocks all audio playing not triggered by user interaction.
+function playSoundForceful(){
+  var hzr = getTime();
+  var htmlizedCanto = hzr2canto(hzr);;
+  var jyutpings = htmlizedCanto.match(/[a-z][a-z]+[0-6]/g).join(" ");
+  console.log(jyutpings);
+  jp_pronounce(jyutpings);
+}
+
 </script>
 <style>
 body {background-color:#000022; text-align:center; font-family:serif; } 
@@ -56,10 +54,8 @@ rt {font-size:0.3em; color:#FFFFDD;display: inline;line-height: 0.5em;text-align
 </style>
 </head>
 <body onload='updateTime()'>
-<!--textarea id='input'></textarea-->
-<!--button type='button' onclick='convert();'>Check</button-->
 <h2 id='clock'></h2>
-<h1 id='canto'></h1>
+<h1 id='canto' onclick='playSoundForceful();'></h1>
 <hr>
 <p>In Cantonese, one hour is divided into twelve <em>字</em> (or <em>zi6</em>, = 5 minutes). <br>To tell the time, simply look at the clockface and read out what numbers the two hands are pointing at. </p>
 </body>
